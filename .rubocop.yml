@@ -1,2 +1,5 @@
 Metrics/LineLength:
   Max: 140
+
+Layout/SpaceAroundOperators:
+  Enabled: false
