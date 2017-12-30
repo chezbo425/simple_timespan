@@ -75,21 +75,52 @@ class SimpleTimespanTest < Minitest::Test
   end
 
   def test_initialize_individual_components_years
-    timespan = SimpleTimespan.new(31535999)
+    timespan = SimpleTimespan.new(31_535_999)
     assert timespan.years == 0
 
-    timespan = SimpleTimespan.new(31536000)
+    timespan = SimpleTimespan.new(31_536_000)
     assert timespan.years == 1
 
-    timespan = SimpleTimespan.new(63071999)
+    timespan = SimpleTimespan.new(63_071_999)
     assert timespan.years == 1
 
-    timespan = SimpleTimespan.new(63072000)
+    timespan = SimpleTimespan.new(63_072_000)
     assert timespan.years == 2
   end
 
   def test_to_s_zero
     timespan = SimpleTimespan.new(0)
-    assert timespan.to_s == "0 seconds"
+    assert timespan.to_s == '0 seconds'
+  end
+
+  def test_to_s_singular
+    to_s_pluralization_helper(1, '1 second')
+
+    to_s_pluralization_helper(60, '1 minute')
+
+    to_s_pluralization_helper(60*60, '1 hour')
+
+    to_s_pluralization_helper(60*60*24, '1 day')
+
+    to_s_pluralization_helper(60*60*24*365, '1 year')
+  end
+
+  def test_to_s_plural
+    to_s_pluralization_helper(2, '2 seconds')
+
+    to_s_pluralization_helper(2*60, '2 minutes')
+
+    to_s_pluralization_helper(2*60*60, '2 hours')
+
+    to_s_pluralization_helper(2*60*60*24, '2 days')
+
+    to_s_pluralization_helper(2*60*60*24*365, '2 years')
+  end
+
+  private
+
+  def to_s_pluralization_helper(value, expected)
+    timespan = SimpleTimespan.new(value)
+    assert_equal(expected, timespan.to_s)
   end
 end
