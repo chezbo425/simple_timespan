@@ -3,3 +3,9 @@ Metrics/LineLength:
 
 Layout/SpaceAroundOperators:
   Enabled: false
+
+Style/TernaryParentheses:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
