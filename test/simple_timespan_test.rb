@@ -94,33 +94,55 @@ class SimpleTimespanTest < Minitest::Test
   end
 
   def test_to_s_singular
-    to_s_pluralization_helper(1, '1 second')
+    to_s_test_helper(1, '1 second')
 
-    to_s_pluralization_helper(60, '1 minute')
+    to_s_test_helper(60, '1 minute')
 
-    to_s_pluralization_helper(60*60, '1 hour')
+    to_s_test_helper(60*60, '1 hour')
 
-    to_s_pluralization_helper(60*60*24, '1 day')
+    to_s_test_helper(60*60*24, '1 day')
 
-    to_s_pluralization_helper(60*60*24*365, '1 year')
+    to_s_test_helper(60*60*24*365, '1 year')
   end
 
   def test_to_s_plural
-    to_s_pluralization_helper(2, '2 seconds')
+    to_s_test_helper(2, '2 seconds')
 
-    to_s_pluralization_helper(2*60, '2 minutes')
+    to_s_test_helper(2*60, '2 minutes')
 
-    to_s_pluralization_helper(2*60*60, '2 hours')
+    to_s_test_helper(2*60*60, '2 hours')
 
-    to_s_pluralization_helper(2*60*60*24, '2 days')
+    to_s_test_helper(2*60*60*24, '2 days')
 
-    to_s_pluralization_helper(2*60*60*24*365, '2 years')
+    to_s_test_helper(2*60*60*24*365, '2 years')
+  end
+
+  def test_to_s_ago
+    to_s_ago_test_helper(1, '1 second ago')
+
+    to_s_ago_test_helper(60, '1 minute ago')
+
+    to_s_ago_test_helper(60*60, '1 hour ago')
+
+    to_s_ago_test_helper(60*60*24, '1 day ago')
+
+    to_s_ago_test_helper(60*60*24*365, '1 year ago')
   end
 
   private
 
-  def to_s_pluralization_helper(value, expected)
+  def to_s_test_helper(value, expected)
+    to_s_helper(value, expected, &:to_s)
+  end
+
+  def to_s_ago_test_helper(value, expected)
+    to_s_helper(value, expected, &:to_s_ago)
+  end
+
+  def to_s_helper(value, expected)
+    raise ArgumentError unless block_given?
+
     timespan = SimpleTimespan.new(value)
-    assert_equal(expected, timespan.to_s)
+    assert_equal(expected, yield(timespan))
   end
 end

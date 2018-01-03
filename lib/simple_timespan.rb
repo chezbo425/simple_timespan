@@ -39,30 +39,68 @@ class SimpleTimespan
   def to_s
     result = []
     if years > 0
-      _suffix = (years == 1) ? "year" : "years"
-      result << "#{years} #{_suffix}"
+      result << "#{years} #{year_or_years_string}"
     end
 
     if days > 0
-      _suffix = (days == 1) ? "day" : "days"
-      result << "#{days} #{_suffix}"
+      result << "#{days} #{day_or_days_string}"
     end
 
     if hours > 0
-      _suffix = (hours == 1) ? "hour" : "hours"
-      result << "#{hours} #{_suffix}"
+      result << "#{hours} #{hour_or_hours_string}"
     end
 
     if minutes > 0
-      _suffix = (minutes == 1) ? "minute" : "minutes"
-      result << "#{minutes} #{_suffix}"
+      result << "#{minutes} #{minute_or_minutes_string}"
     end
 
-    if (seconds > 0) || (result.length == 0)
-      _suffix = (seconds == 1) ? "second" : "seconds"
-      result << "#{seconds} #{_suffix}"
+    if (seconds > 0) || result.none?
+      result << "#{seconds} #{second_or_seconds_string}"
     end
 
     result.join(' ')
+  end
+
+  ##
+  # Returns a string that describes the Timespan as a time in the past.
+  #
+  # i.e., 2 years ago
+  def to_s_ago
+    prefix =
+      if !years.zero?
+        "#{years} #{year_or_years_string}"
+      elsif !days.zero?
+        "#{days} #{day_or_days_string}"
+      elsif !hours.zero?
+        "#{hours} #{hour_or_hours_string}"
+      elsif !minutes.zero?
+        "#{minutes} #{minute_or_minutes_string}"
+      elsif !seconds.zero?
+        "#{seconds} #{second_or_seconds_string}"
+      end
+
+    prefix + ' ago'
+  end
+
+  private
+
+  def year_or_years_string
+    (years == 1) ? 'year' : 'years'
+  end
+
+  def day_or_days_string
+    (days == 1) ? 'day' : 'days'
+  end
+
+  def hour_or_hours_string
+    (hours == 1) ? 'hour' : 'hours'
+  end
+
+  def minute_or_minutes_string
+    (minutes == 1) ? 'minute' : 'minutes'
+  end
+
+  def second_or_seconds_string
+    (seconds == 1) ? 'second' : 'seconds'
   end
 end
