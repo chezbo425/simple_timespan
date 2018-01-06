@@ -82,6 +82,26 @@ class SimpleTimespan
     prefix + ' ago'
   end
 
+  def to_years
+    self.years
+  end
+
+  def to_days
+    (self.to_years * 365) + self.days
+  end
+
+  def to_hours
+    (self.to_days * 24) + self.hours
+  end
+
+  def to_minutes
+    (self.to_hours * 60) + self.minutes
+  end
+
+  def to_seconds
+    (self.to_minutes * 60) + self.seconds
+  end
+
   private
 
   def year_or_years_string

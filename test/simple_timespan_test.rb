@@ -129,6 +129,31 @@ class SimpleTimespanTest < Minitest::Test
     to_s_ago_test_helper(60*60*24*365, '1 year ago')
   end
 
+  def test_to_years
+    timespan = SimpleTimespan.new(60*60*24*365 + 24*60*60 + 60*60 + 60 + 1)
+    assert_equal(1, timespan.to_years)
+  end
+
+  def test_to_days
+    timespan = SimpleTimespan.new(60*60*24*365 + 24*60*60 + 60*60 + 60 + 1)
+    assert_equal(365 + 1, timespan.to_days)
+  end
+
+  def test_to_hours
+    timespan = SimpleTimespan.new(60*60*24*365 + 24*60*60 + 60*60 + 60 + 1)
+    assert_equal(((365 + 1) * 24) + 1, timespan.to_hours)
+  end
+
+  def test_to_minutes
+    timespan = SimpleTimespan.new(60*60*24*365 + 24*60*60 + 60*60 + 60 + 1)
+    assert_equal(((((365 + 1) * 24) + 1) * 60) + 1, timespan.to_minutes)
+  end
+
+  def test_to_seconds
+    timespan = SimpleTimespan.new(60*60*24*365 + 24*60*60 + 60*60 + 60 + 1)
+    assert_equal(((((((365 + 1) * 24) + 1) * 60) + 1) * 60) + 1, timespan.to_seconds)
+  end
+
   private
 
   def to_s_test_helper(value, expected)
