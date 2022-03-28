@@ -3,7 +3,7 @@ require './test/test_helper'
 
 class SimpleTimespanTest < Minitest::Test
   def test_initialize_all_components
-    timespan = SimpleTimespan.new(BigDecimal.new("166_405_532.123456789"))
+    timespan = SimpleTimespan.new(BigDecimal("166_405_532.123456789"))
     assert timespan.years == 5
     assert timespan.days == 100
     assert timespan.hours == 23
